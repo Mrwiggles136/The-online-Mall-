@@ -1,43 +1,4 @@
 {
   "products": [
     {
-      "id": "dark-energy-hard-trap-beat-140-bpm",
-      "title": "Dark Energy | Hard Trap Beat (140 BPM)",
-      "price": 29.99,
-      "type": "digital",
-      "category": "one",
-      "description": "Unleash pure aggression with \"Dark Energy,\" a high-octane hard trap instrumental engineered for heavy hitters. Clocking in at a driving 140 BPM, this track is built on a foundation of distorted 808s that hit with surgical precision and crisp, rattling hi-hat rolls that demand movement.\n\nDesigned specifically for artists looking to dominate the underground scene or create high-intensity cinematic content, \"Dark Energy\" features an eerie, minor-key melodic loop that builds tension before dropping into a punishingly heavy rhythm section. Whether you are recording gritty lyrical verses, aggressive drill-inspired flows, or need a powerhouse soundtrack for gaming montages and gym edits, this beat provides the perfect sonic landscape to command attention.\n\nKey Features:\n• Tempo: 140 BPM (Perfect for Trap/Drill styles)\n• Key: C# Minor\n• Sound Profile: Distorted Bass, Sharp Percussion, Dark Atmospheric Melodies\n• Vibe: Aggressive, Menacing, High-Energy",
-      "image": "",
-      "stock": null,
-      "sku": "DARK-ENERGY-HARD-TRAP-BEAT-140-BPM",
-      "paypal_hosted_button_id": "",
-      "active": true
-    },
-    {
-      "id": "dark-energy-hard-trap-instrumental-140-bpm",
-      "title": "Dark Energy | Hard Trap Instrumental (140 BPM)",
-      "price": 29.99,
-      "type": "digital",
-      "category": "Beats",
-      "description": "Unleash pure aggression with \"Dark Energy,\" a high-octane hard trap beat engineered for heavy hitters. Clocking in at a driving 140 BPM, this track is built on a foundation of distorted 808s that hit like a sledgehammer and crisp, syncopated hi-hat rolls that demand movement.\n\nDesigned with space for lyrical dominance, the arrangement features haunting minor-key melodies and cinematic textures that create an atmosphere of tension and grit. Whether you are looking to craft a club anthem or a menacing drill-inspired track, this beat provides the sonic weight needed to command attention from the first bar.\n\nPerfect for:\n• Aggressive Rap & Trap Artists\n• Phonk Influenced Projects\n• High-Intensity Gaming Montages/Content Creation\n\nKey Specs:\n• Tempo: 140 BPM\n• Key: C# Minor (Dark/Aggressive)\n• Vibe: Gritty, Heavy, Cinematic",
-      "image": "",
-      "stock": null,
-      "sku": "DARK-ENERGY-HARD-TRAP-INSTRUMENTAL-140-BPM",
-      "paypal_hosted_button_id": "",
-      "active": true
-    },
-    {
-      "id": "hobo-brite-ultra-bright-led-rechargeable-headlamp-",
-      "title": "Hobo Brite™ Ultra-Bright LED Rechargeable Headlamp – Lightweight, Waterproof Camping & Hiking Gear",
-      "price": 29.99,
-      "type": "digital",
-      "category": "new one",
-      "description": "Illuminate your path and conquer the dark with the Hobo Brite™, the ultimate high-performance headlamp designed for adventurers who refuse to be slowed down by the sunset. Whether you are navigating rugged mountain trails at midnight, setting up camp in a storm, or working on intricate repairs under the hood of a car, this ultra-bright LED powerhouse provides crystal-clear visibility exactly where you need it most.\n\nEngineered with advanced optical technology, the Hobo Brite™ delivers an intense, wide-angle beam that cuts through fog and darkness without straining your eyes. Its lightweight, ergonomic design ensures maximum comfort during long treks, while the adjustable headband stays secure no matter how much terrain you tackle. \n\nBuilt to endure the elements, this headlamp features a ruggedized, waterproof exterior that stands up to rain, sweat, and dust. Forget about hunting for disposable batteries; our integrated high-capacity rechargeable battery provides hours of continuous light on a single charge, making it an essential companion for camping trips, night running, fishing, or emergency preparedness kits.\n\nDon't let the darkness limit your exploration. Gear up with Hobo Brite™ and see every detail of your journey.",
-      "image": "",
-      "stock": null,
-      "sku": "HOBO-BRITE-ULTRA-BRIGHT-LED-RECHARGEABLE-HEADLAMP-",
-      "paypal_hosted_button_id": "",
-      "active": true
-    }
-  ]
-}
+      
