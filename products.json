@@ -1,1 +1,17 @@
-{"products": []}
+{
+  "products": [
+    {
+      "id": "dark-energy-hard-trap-beat-140-bpm",
+      "title": "Dark Energy | Hard Trap Beat (140 BPM)",
+      "price": 29.99,
+      "type": "digital",
+      "category": "one",
+      "description": "Unleash pure aggression with \"Dark Energy,\" a high-octane hard trap instrumental engineered for heavy hitters. Clocking in at a driving 140 BPM, this track is built on a foundation of distorted 808s that hit with surgical precision and crisp, rattling hi-hat rolls that demand movement.\n\nDesigned specifically for artists looking to dominate the underground scene or create high-intensity cinematic content, \"Dark Energy\" features an eerie, minor-key melodic loop that builds tension before dropping into a punishingly heavy rhythm section. Whether you are recording gritty lyrical verses, aggressive drill-inspired flows, or need a powerhouse soundtrack for gaming montages and gym edits, this beat provides the perfect sonic landscape to command attention.\n\nKey Features:\n• Tempo: 140 BPM (Perfect for Trap/Drill styles)\n• Key: C# Minor\n• Sound Profile: Distorted Bass, Sharp Percussion, Dark Atmospheric Melodies\n• Vibe: Aggressive, Menacing, High-Energy",
+      "image": "",
+      "stock": null,
+      "sku": "DARK-ENERGY-HARD-TRAP-BEAT-140-BPM",
+      "paypal_hosted_button_id": "",
+      "active": true
+    }
+  ]
+}
