@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Customize your store</title>
+<style>
+  :root { --ink:#16161A; --muted:#5C5C66; --line:#E2E2DC; --bg:#F5F5F2; --card:#fff; --accent:#1F5EFF; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+  .layout { display: flex; flex-wrap: wrap; min-height: 100vh; }
+  .panel { flex: 1 1 380px; max-width: 460px; min-width: 0; background: var(--card); border-right: 1px solid var(--line); display: flex; flex-direction: column; max-height: 100vh; position: sticky; top: 0; }
+  .panel-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); }
+  .panel-head h1 { margin: 0 0 4px; font-size: 20px; }
+  .panel-head p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+  .panel-body { overflow-y: auto; padding: 4px 20px 20px; flex: 1; }
+  .panel-foot { padding: 14px 20px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; }
+  details { border-bottom: 1px solid var(--line); padding: 4px 0; }
+  summary { cursor: pointer; font-weight: 650; padding: 12px 0; min-height: 44px; display: flex; align-items: center; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "▸"; margin-right: 8px; transition: transform .15s; display: inline-block; }
+  details[open] summary::before { transform: rotate(90deg); }
+  .field { display: flex; flex-direction: column; gap: 4px; margin: 0 0 12px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .field input[type=text], .field input[type=number], .field input[type=url], .field select, .field textarea {
+    width: 100%; min-height: 40px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; background: #fff;
+  }
+  .field textarea { min-height: 64px; resize: vertical; }
+  .color-row { display: flex; gap: 8px; align-items: center; }
+  .color-row input[type=color] { width: 48px; height: 40px; padding: 2px; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; flex: none; }
+  .hint { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .preset { border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 12px 6px 6px; background: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 14px; min-height: 40px; }
+  .preset span.sw { width: 26px; height: 26px; border-radius: 999px; display: inline-block; border: 1px solid rgba(0,0,0,.1); }
+  .btn { min-height: 44px; padding: 10px 16px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; font: inherit; font-weight: 650; cursor: pointer; }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn:hover { filter: brightness(.97); }
+  .preview { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; }
+  .preview-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--card); }
+  .tab { min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600; }
+  .tab[aria-pressed=true] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .size { margin-left: auto; }
+  .frame-wrap { flex: 1; display: flex; justify-content: center; padding: 16px; min-height: 70vh; }
+  iframe { border: 1px solid var(--line); border-radius: 12px; background: #fff; width: 100%; height: 100%; min-height: 70vh; box-shadow: 0 8px 30px rgba(0,0,0,.08); transition: width .2s; }
+  iframe.phone { width: 390px; max-width: 100%; }
+  .status { font-size: 13px; color: #0B7A4B; min-height: 18px; width: 100%; }
+  .steps { margin: 8px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+  @media (max-width: 860px) { .panel { max-width: none; max-height: none; position: static; border-right: 0; } }
+</style>
+</head>
+<body>
+<div class="layout">
+  <section class="panel" aria-label="Settings">
+    <div class="panel-head">
+      <h1>Customize your store</h1>
+      <p>Change colors, background, titles and wording. The preview updates as you type. When you're happy, click <strong>Download site.json</strong> and replace the file in your store folder.</p>
+    </div>
+    <div class="panel-body" id="form"><p class="hint">Loading…</p></div>
+    <div class="panel-foot">
+      <button class="btn btn-primary" type="button" id="download">Download site.json</button>
+      <button class="btn" type="button" id="copy">Copy</button>
+      <button class="btn" type="button" id="reset">Undo my changes</button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+      <ol class="steps">
+        <li>Put the downloaded <code>site.json</code> in your store folder (replace the old one).</li>
+        <li>In Hey Hue, type <code>publish store</code> — or upload it on GitHub.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="preview" aria-label="Preview">
+    <div class="preview-bar">
+      <button class="tab" type="button" data-page="index.html" aria-pressed="true">Shop page</button>
+      <button class="tab" type="button" data-page="item.html" aria-pressed="false">Item page</button>
+      <button class="tab" type="button" data-page="thanks.html" aria-pressed="false">Thank-you page</button>
+      <button class="tab size" type="button" id="size" aria-pressed="false">Phone view</button>
+    </div>
+    <div class="frame-wrap"><iframe id="frame" title="Store preview" src="index.html"></iframe></div>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var DRAFT_KEY = "store_customize_draft_v1";
+  var saved = null, site = null, firstItemId = "";
+  var form = document.getElementById("form"), frame = document.getElementById("frame");
+
+  var COLOR_LABELS = {
+    background: "Page background", surface: "Cards & panels", text: "Main text", muted: "Secondary text",
+    accent: "Buttons & highlights", accent_text: "Text on buttons", header_bg: "Header bar",
+    header_text: "Header text", border: "Lines & borders"
+  };
+  var PRESETS = [
+    { name: "Clean light", c: { background: "#F5F5F2", surface: "#FFFFFF", text: "#16161A", muted: "#5C5C66", accent: "#E4572E", accent_text: "#FFFFFF", header_bg: "#16161A", header_text: "#FFFFFF", border: "#E2E2DC" } },
+    { name: "Night studio", c: { background: "#0F1115", surface: "#1A1D24", text: "#F2F2F5", muted: "#A3A8B4", accent: "#FFB020", accent_text: "#16161A", header_bg: "#07080A", header_text: "#FFFFFF", border: "#2B2F38" } },
+    { name: "Ocean", c: { background: "#EEF4F8", surface: "#FFFFFF", text: "#0E2233", muted: "#4C6273", accent: "#0B6BCB", accent_text: "#FFFFFF", header_bg: "#0E2233", header_text: "#FFFFFF", border: "#D4E1EA" } },
+    { name: "Forest", c: { background: "#F3F5EF", surface: "#FFFFFF", text: "#1B2A1E", muted: "#55665A", accent: "#2E7D4F", accent_text: "#FFFFFF", header_bg: "#1B2A1E", header_text: "#FFFFFF", border: "#DCE3D5" } },
+    { name: "Gold & black", c: { background: "#111111", surface: "#1C1C1C", text: "#F7F3E8", muted: "#B9B2A0", accent: "#D4AF37", accent_text: "#111111", header_bg: "#000000", header_text: "#D4AF37", border: "#333333" } }
+  ];
+  var FONTS = ["Inter", "Space Grotesk", "Poppins", "Montserrat", "Oswald", "Bebas Neue", "Playfair Display", "Lora", "DM Sans", "Archivo", "Rubik", "Anton", ""];
+  var WORDING_GROUPS = [
+    ["Shop page", ["hero_title", "hero_text", "search_placeholder", "all_categories", "showing", "no_results", "prev", "next"]],
+    ["Sorting", ["sort_label", "sort_newest", "sort_price_low", "sort_price_high", "sort_name"]],
+    ["Buttons & labels", ["add_to_cart", "added", "buy_now", "out_of_stock", "only_left", "digital_label", "physical_label", "quantity", "back_to_shop", "related_title"]],
+    ["Cart & checkout", ["cart_button", "cart_title", "cart_empty", "remove", "subtotal", "shipping", "free", "total", "checkout_note", "checkout_not_ready", "continue_shopping", "payment_error"]],
+    ["Thank-you page & footer", ["thanks_title", "thanks_text", "thanks_order", "footer_text"]]
+  ];
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function pretty(k) { return k.replace(/_/g, " ").replace(/^\w/, function (c) { return c.toUpperCase(); }); }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function setStatus(t) { var s = document.getElementById("status"); s.textContent = t; clearTimeout(setStatus._t); setStatus._t = setTimeout(function () { s.textContent = ""; }, 3500); }
+
+  function field(path, label, value, opts) {
+    opts = opts || {};
+    var id = "f_" + path.replace(/\./g, "_");
+    var input;
+    if (opts.type === "textarea") input = '<textarea id="' + id + '" data-path="' + path + '">' + esc(value) + "</textarea>";
+    else if (opts.type === "select") input = '<select id="' + id + '" data-path="' + path + '">' + opts.options.map(function (o) {
+      return '<option value="' + esc(o) + '"' + (o === value ? " selected" : "") + ">" + esc(o || "Default system font") + "</option>"; }).join("") + "</select>";
+    else input = '<input id="' + id + '" type="' + (opts.type || "text") + '" data-path="' + path + '"' + (opts.step ? ' step="' + opts.step + '"' : "") +
+      (opts.min != null ? ' min="' + opts.min + '"' : "") + (opts.max != null ? ' max="' + opts.max + '"' : "") + ' value="' + esc(value) + '">';
+    return '<div class="field"><label for="' + id + '">' + esc(label) + "</label>" + input + (opts.hint ? '<span class="hint">' + esc(opts.hint) + "</span>" : "") + "</div>";
+  }
+  function colorField(key, value) {
+    var id = "c_" + key;
+    return '<div class="field"><label for="' + id + '">' + esc(COLOR_LABELS[key] || pretty(key)) + '</label><div class="color-row">' +
+      '<input type="color" id="' + id + '" data-color="' + key + '" value="' + esc(value) + '" aria-label="' + esc(COLOR_LABELS[key] || key) + ' picker">' +
+      '<input type="text" data-colorhex="' + key + '" value="' + esc(value) + '" aria-label="' + esc(COLOR_LABELS[key] || key) + ' hex code" maxlength="7"></div></div>';
+  }
+
+  function buildForm() {
+    var c = site.colors || {}, wd = site.wording || {}, sh = site.shipping || {};
+    var html =
+      '<details open><summary>Store name & top bar</summary>' +
+      field("store_name", "Store name", site.store_name) +
+      field("tagline", "Tagline (under the name)", site.tagline) +
+      field("announcement", "Announcement bar (leave blank to hide)", site.announcement) +
+      field("contact_email", "Contact email (shown in the footer)", site.contact_email) +
+      "</details>" +
+      '<details open><summary>Colors</summary><div class="presets">' +
+      PRESETS.map(function (p, i) { return '<button type="button" class="preset" data-preset="' + i + '"><span class="sw" style="background:linear-gradient(135deg,' + p.c.background + " 50%," + p.c.accent + ' 50%)"></span>' + esc(p.name) + "</button>"; }).join("") +
+      "</div>" + Object.keys(COLOR_LABELS).map(function (k) { return colorField(k, c[k] || "#000000"); }).join("") + "</details>" +
+      '<details><summary>Background picture</summary>' +
+      field("background_image", "Picture address", site.background_image, { hint: "Put a picture in your store's images folder and type images/yourfile.jpg — or paste a web address. Leave blank for a plain color." }) +
+      field("background_overlay", "How much the page color covers the picture (0 = none, 1 = fully)", site.background_overlay == null ? 0.85 : site.background_overlay, { type: "number", step: "0.05", min: 0, max: 1, hint: "Higher keeps text readable. 0.8–0.9 works for most pictures." }) +
+      "</details>" +
+      '<details><summary>Fonts</summary>' +
+      field("heading_font", "Headings", site.heading_font || "", { type: "select", options: FONTS }) +
+      field("font", "Body text", site.font || "", { type: "select", options: FONTS }) +
+      "</details>" +
+      '<details><summary>Shop settings, shipping & PayPal</summary>' +
+      field("items_per_page", "Items per page", site.items_per_page || 10, { type: "number", min: 4, max: 48 }) +
+      field("currency", "Currency code", site.currency || "USD", { hint: "USD, CAD, GBP, EUR…" }) +
+      field("shipping.flat_rate", "Shipping charge for physical items", sh.flat_rate == null ? 0 : sh.flat_rate, { type: "number", step: "0.01", min: 0 }) +
+      field("shipping.free_over", "Free shipping when merch total is at least (0 = never free)", sh.free_over == null ? 0 : sh.free_over, { type: "number", step: "0.01", min: 0 }) +
+      field("paypal_client_id", "PayPal Client ID", site.paypal_client_id, { hint: "From developer.paypal.com → Apps & Credentials → Live. This ID is meant to be public; never paste the Secret here." }) +
+      "</details>";
+    WORDING_GROUPS.forEach(function (g) {
+      html += "<details><summary>Wording: " + esc(g[0]) + "</summary>" + g[1].map(function (k) {
+        var long = /text|note|error|no_results/.test(k);
+        var hint = k === "showing" ? "{from}, {to} and {total} are filled in automatically." : (k === "only_left" ? "{n} is filled in with the number left." : "");
+        return field("wording." + k, pretty(k), wd[k] || "", { type: long ? "textarea" : "text", hint: hint });
+      }).join("") + "</details>";
+    });
+    form.innerHTML = html;
+
+    form.querySelectorAll("[data-path]").forEach(function (el) { el.addEventListener("input", onInput); });
+    form.querySelectorAll("[data-color]").forEach(function (el) { el.addEventListener("input", function () { setColor(el.getAttribute("data-color"), el.value); }); });
+    form.querySelectorAll("[data-colorhex]").forEach(function (el) {
+      el.addEventListener("input", function () { var v = el.value.trim(); if (/^#?[0-9a-f]{6}$/i.test(v)) setColor(el.getAttribute("data-colorhex"), v[0] === "#" ? v : "#" + v); });
+    });
+    form.querySelectorAll("[data-preset]").forEach(function (b) {
+      b.onclick = function () { var p = PRESETS[+b.getAttribute("data-preset")]; Object.keys(p.c).forEach(function (k) { setColor(k, p.c[k]); }); setStatus("Applied the " + p.name + " colors."); };
+    });
+  }
+  function setColor(k, v) {
+    site.colors = site.colors || {}; site.colors[k] = v.toUpperCase();
+    var a = form.querySelector('[data-color="' + k + '"]'), b = form.querySelector('[data-colorhex="' + k + '"]');
+    if (a && a.value.toUpperCase() !== v.toUpperCase()) a.value = v;
+    if (b && document.activeElement !== b) b.value = v.toUpperCase();
+    changed();
+  }
+  function onInput(e) {
+    var el = e.target, path = el.getAttribute("data-path").split("."), v = el.value;
+    if (el.type === "number") v = v === "" ? 0 : Number(v);
+    var o = site; for (var i = 0; i < path.length - 1; i++) { o[path[i]] = o[path[i]] || {}; o = o[path[i]]; }
+    o[path[path.length - 1]] = v;
+    changed();
+  }
+  function changed() {
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(site)); } catch (e) {}
+    sendPreview();
+  }
+  function sendPreview() { try { frame.contentWindow.postMessage({ type: "store-preview", site: site }, location.origin); } catch (e) {} }
+
+  window.addEventListener("message", function (e) {
+    if (e.origin === location.origin && e.data && e.data.type === "store-ready") sendPreview();
+  });
+  frame.addEventListener("load", function () { setTimeout(sendPreview, 300); });
+
+  document.querySelectorAll(".tab[data-page]").forEach(function (t) {
+    t.onclick = function () {
+      document.querySelectorAll(".tab[data-page]").forEach(function (x) { x.setAttribute("aria-pressed", x === t); });
+      var pg = t.getAttribute("data-page");
+      frame.src = pg === "item.html" ? "item.html?id=" + encodeURIComponent(firstItemId) : (pg === "thanks.html" ? "thanks.html?order=TEST123" : pg);
+    };
+  });
+  document.getElementById("size").onclick = function () {
+    var on = frame.classList.toggle("phone");
+    this.setAttribute("aria-pressed", on); this.textContent = on ? "Computer view" : "Phone view";
+  };
+  document.getElementById("download").onclick = function () {
+    var blob = new Blob([JSON.stringify(site, null, 2) + "\n"], { type: "application/json" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "site.json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    setStatus("Downloaded site.json — now replace the one in your store folder.");
+  };
+  document.getElementById("copy").onclick = function () {
+    var text = JSON.stringify(site, null, 2);
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
+      setStatus("Copied. Paste it over everything in site.json.");
+    }).catch(function () { setStatus("Couldn't copy — use Download instead."); });
+  };
+  document.getElementById("reset").onclick = function () {
+    site = clone(saved);
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    buildForm(); sendPreview(); setStatus("Back to the published settings.");
+  };
+
+  Promise.all([
+    fetch("site.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
+    fetch("products.json", { cache: "no-store" }).then(function (r) { return r.json(); }).catch(function () { return { products: [] }; })
+  ]).then(function (res) {
+    saved = res[0];
+    var list = (res[1].products || []).filter(function (p) { return p.active !== false; });
+    firstItemId = list.length ? list[list.length - 1].id : "";
+    var draft = null;
+    try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch (e) {}
+    site = draft || clone(saved);
+    if (draft) setStatus("Picked up your unsaved changes from last time. 'Undo my changes' clears them.");
+    buildForm(); sendPreview();
+  }).catch(function () {
+    form.innerHTML = '<p class="hint">Couldn\'t load site.json. Open this page from your live store (or a local web server), not by double-clicking the file.</p>';
+  });
+})();
+</script>
+</body>
+</html>
